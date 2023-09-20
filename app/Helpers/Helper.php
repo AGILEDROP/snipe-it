@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 use App\Models\Accessory;
+use App\Models\Asset;
+use App\Models\AssetModel;
 use App\Models\Component;
 use App\Models\Consumable;
 use App\Models\CustomField;
@@ -30,6 +32,16 @@ class Helper
 
         if ($str) {
             return $Parsedown->text($str);
+        }
+    }
+
+    public static function parseEscapedMarkedownInline($str = null)
+    {
+        $Parsedown = new \Parsedown();
+        $Parsedown->setSafeMode(true);
+
+        if ($str) {
+            return $Parsedown->line($str);
         }
     }
 
@@ -334,7 +346,11 @@ class Helper
             '#92896B',
         ];
 
+        $total_colors = count($colors);
 
+        if ($index >= $total_colors) {
+            $index = $index - $total_colors;
+        }
 
         return $colors[$index];
     }
@@ -528,20 +544,23 @@ class Helper
      * @since [v2.5]
      * @return array
      */
-    public static function categoryTypeList()
+    public static function categoryTypeList($selection=null)
     {
         $category_types = [
             '' => '',
-            'accessory' => 'Accessory',
-            'asset' => 'Asset',
-            'consumable' => 'Consumable',
-            'component' => 'Component',
-            'license' => 'License',
+            'accessory' => trans('general.accessory'),
+            'asset' => trans('general.asset'),
+            'consumable' => trans('general.consumable'),
+            'component' => trans('general.component'),
+            'license' => trans('general.license'),
         ];
 
+        if ($selection != null){
+            return $category_types[strtolower($selection)];
+        }
+        else
         return $category_types;
     }
-
     /**
      * Get the list of custom fields in an array to make a dropdown menu
      *
@@ -626,6 +645,7 @@ class Helper
         $consumables = Consumable::withCount('consumableAssignments as consumable_assignments_count')->whereNotNull('min_amt')->get();
         $accessories = Accessory::withCount('users as users_count')->whereNotNull('min_amt')->get();
         $components = Component::whereNotNull('min_amt')->get();
+        $asset_models = AssetModel::where('min_amt', '>', 0)->get();
 
         $avail_consumables = 0;
         $items_array = [];
@@ -684,6 +704,28 @@ class Helper
                 $items_array[$all_count]['percent'] = $percent;
                 $items_array[$all_count]['remaining'] = $avail;
                 $items_array[$all_count]['min_amt'] = $component->min_amt;
+                $all_count++;
+            }
+        }
+
+        foreach ($asset_models as $asset_model){
+
+            $asset = new Asset();
+            $total_owned = $asset->where('model_id', '=', $asset_model->id)->count();
+            $avail = $asset->where('model_id', '=', $asset_model->id)->whereNull('assigned_to')->count();
+
+            if ($avail < ($asset_model->min_amt)+ \App\Models\Setting::getSettings()->alert_threshold) {
+                if ($avail > 0) {
+                    $percent = number_format((($avail / $total_owned) * 100), 0);
+                } else {
+                    $percent = 100;
+                }
+                $items_array[$all_count]['id'] = $asset_model->id;
+                $items_array[$all_count]['name'] = $asset_model->name;
+                $items_array[$all_count]['type'] = 'models';
+                $items_array[$all_count]['percent'] = $percent;
+                $items_array[$all_count]['remaining'] = $avail;
+                $items_array[$all_count]['min_amt'] = $asset_model->min_amt;
                 $all_count++;
             }
         }
@@ -1092,6 +1134,15 @@ class Helper
         return $file_name;
     }
 
+
+    /**
+     * Universal helper to show file size in human-readable formats
+     *
+     * @author A. Gianotto <snipe@snipe.net>
+     * @since 5.0
+     *
+     * @return string[]
+     */
     public static function formatFilesizeUnits($bytes)
     {
         if ($bytes >= 1073741824)
@@ -1121,30 +1172,141 @@ class Helper
 
         return $bytes;
     }
+
+    /**
+     * This is weird but used by the side nav to determine which URL to point the user to
+     *
+     * @author A. Gianotto <snipe@snipe.net>
+     * @since 5.0
+     *
+     * @return string[]
+     */
     public static function SettingUrls(){
         $settings=['#','fields.index', 'statuslabels.index', 'models.index', 'categories.index', 'manufacturers.index', 'suppliers.index', 'departments.index', 'locations.index', 'companies.index', 'depreciations.index'];
 
         return $settings;
         }
-    public static function AgeFormat($date) {
-        $year = Carbon::parse($date)
-            ->diff(now())->y;
-        $month = Carbon::parse($date)
-            ->diff(now())->m;
-        $days = Carbon::parse($date)
-            ->diff(now())->d;
-        $age='';
-        if ($year) {
-            $age .= $year.'y ';
-        }
-        if ($month) {
-            $age .= $month.'m ';
-        }
-        if ($days) {
-            $age .= $days.'d';
+
+
+    /**
+     * Generic helper (largely used by livewire right now) that returns the font-awesome icon
+     * for the object type.
+     *
+     * @author A. Gianotto <snipe@snipe.net>
+     * @since 6.1.0
+     *
+     * @return string
+     */
+    public static function iconTypeByItem($item) {
+
+        switch ($item) {
+            case 'asset':
+                return 'fas fa-barcode';
+                break;
+            case 'accessory':
+                return 'fas fa-keyboard';
+                break;
+            case 'component':
+                return 'fas fa-hdd';
+                break;
+            case 'consumable':
+                return 'fas fa-tint';
+                break;
+            case 'license':
+                return 'far fa-save';
+                break;
+            case 'location':
+                return 'fas fa-map-marker-alt';
+                break;
+            case 'user':
+                return 'fas fa-user';
+                break;
         }
 
-        return $age;
+    }
 
+
+     /*
+     * This is a shorter way to see if the app is in demo mode.
+     *
+     * This makes it cleanly available in blades and in controllers, e.g.
+     *
+     * Blade:
+     * {{ Helper::isDemoMode() ? ' disabled' : ''}} for form blades where we need to disable a form
+     *
+     * Controller:
+     * if (Helper::isDemoMode()) {
+     *      // don't allow the thing
+     * }
+     * @todo - use this everywhere else in the app where we have very long if/else config('app.lock_passwords') stuff
+     */
+    public static function isDemoMode() {
+        if (config('app.lock_passwords') === true) {
+            return true;
+            \Log::debug('app locked!');
+        }
+        
+        return false;
+    }
+
+  
+    /**
+     * Conversion between units of measurement
+     *
+     * @author Grant Le Roux <grant.leroux+snipe-it@gmail.com>
+     * @since 5.0
+     * @param float  $value    Measurement value to convert
+     * @param string $srcUnit  Source unit of measurement
+     * @param string $dstUnit  Destination unit of measurement
+     * @param int    $round    Round the result to decimals (Default false - No rounding)
+     * @return float
+     */
+    public static function convertUnit($value, $srcUnit, $dstUnit, $round=false) {
+        $srcFactor = static::getUnitConversionFactor($srcUnit);
+        $dstFactor = static::getUnitConversionFactor($dstUnit);
+        $output = $value * $srcFactor / $dstFactor;
+        return ($round !== false) ? round($output, $round) : $output;
+    }
+  
+    /**
+     * Get conversion factor from unit of measurement to mm
+     *
+     * @author Grant Le Roux <grant.leroux+snipe-it@gmail.com>
+     * @since 5.0
+     * @param string $unit  Unit of measurement
+     * @return float
+     */
+    public static function getUnitConversionFactor($unit) {
+        switch (strtolower($unit)) {
+            case 'mm':
+                return 1.0;
+            case 'cm':
+                return 10.0;
+            case 'm':
+                return 1000.0;
+            case 'in':
+                return 25.4;
+            case 'ft':
+                return 12 * static::getUnitConversionFactor('in');
+            case 'yd':
+                return 3 * static::getUnitConversionFactor('ft');
+            case 'pt':
+                return (1 / 72) * static::getUnitConversionFactor('in');
+            default:
+                throw new \InvalidArgumentException('Unit: \'' . $unit . '\' is not supported');
+
+                return false;
+        }
+    }
+
+
+    /*
+     * I know it's gauche  to return a shitty HTML string, but this is just a helper and since it will be the same every single time,
+     * it seemed pretty safe to do here. Don't you judge me.
+     */
+    public static function showDemoModeFieldWarning() {
+        if (Helper::isDemoMode()) {
+            return "<p class=\"text-warning\"><i class=\"fas fa-lock\"></i>" . trans('general.feature_disabled') . "</p>";
+        }
     }
 }

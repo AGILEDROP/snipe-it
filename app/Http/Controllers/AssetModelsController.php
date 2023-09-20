@@ -76,14 +76,15 @@ class AssetModelsController extends Controller
         $model->depreciation_id = $request->input('depreciation_id');
         $model->name = $request->input('name');
         $model->model_number = $request->input('model_number');
+        $model->min_amt = $request->input('min_amt');
         $model->manufacturer_id = $request->input('manufacturer_id');
         $model->category_id = $request->input('category_id');
         $model->notes = $request->input('notes');
         $model->user_id = Auth::id();
         $model->requestable = Request::has('requestable');
 
-        if ($request->input('custom_fieldset') != '') {
-            $model->fieldset_id = e($request->input('custom_fieldset'));
+        if ($request->input('fieldset_id') != '') {
+            $model->fieldset_id = e($request->input('fieldset_id'));
         }
 
         $model = $request->handleImages($model);
@@ -153,6 +154,7 @@ class AssetModelsController extends Controller
         $model->eol = $request->input('eol');
         $model->name = $request->input('name');
         $model->model_number = $request->input('model_number');
+        $model->min_amt = $request->input('min_amt');
         $model->manufacturer_id = $request->input('manufacturer_id');
         $model->category_id = $request->input('category_id');
         $model->notes = $request->input('notes');
@@ -160,10 +162,10 @@ class AssetModelsController extends Controller
 
         $this->removeCustomFieldsDefaultValues($model);
 
-        if ($request->input('custom_fieldset') == '') {
+        if ($request->input('fieldset_id') == '') {
             $model->fieldset_id = null;
         } else {
-            $model->fieldset_id = $request->input('custom_fieldset');
+            $model->fieldset_id = $request->input('fieldset_id');
 
             if ($this->shouldAddDefaultValues($request->input())) {
                 if (!$this->assignCustomFieldsDefaultValues($model, $request->input('default_values'))){
@@ -286,6 +288,7 @@ class AssetModelsController extends Controller
         return view('models/edit')
             ->with('depreciation_list', Helper::depreciationList())
             ->with('item', $model)
+            ->with('model_id', $model_to_clone->id)
             ->with('clone_model', $model_to_clone);
     }
 
@@ -444,7 +447,7 @@ class AssetModelsController extends Controller
     {
         return ! empty($input['add_default_values'])
             && ! empty($input['default_values'])
-            && ! empty($input['custom_fieldset']);
+            && ! empty($input['fieldset_id']);
     }
 
     /**

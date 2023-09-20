@@ -3,6 +3,8 @@
 return array(
 
     'does_not_exist' => 'Model neexistuje.',
+    'no_association' => 'VAROVÁNÍ! Model majetku pro tuto položku je neplatný, nebo chybí!',
+    'no_association_fix' => 'Tento stav může způsobit nedozírné problémy. Přiřaďte dotyčnému majetku správný model.',
     'assoc_users'	 => 'Tento model je spojen s alespoň jedním majetkem a nemůže být smazán. Prosím smažte tyto majetky a pak to zkuste znovu. ',
 
 
@@ -14,7 +16,7 @@ return array(
 
     'update' => array(
         'error'   => 'Model nebyl aktualizován, zkuste to prosím znovu',
-        'success' => 'Model byl úspěšně aktualizován.'
+        'success' => 'Model byl úspěšně aktualizován.',
     ),
 
     'delete' => array(
@@ -30,12 +32,14 @@ return array(
 
     'bulkedit' => array(
         'error'   		=> 'Žádné pole nebyly změněny, takže nic nebylo aktualizováno.',
-        'success' 		=> 'Modely byly aktualizovány.'
+        'success' 		=> 'Model úspěšně upraven. |:model_count modelů bylo úspěšně upraveno.',
+        'warn'          => 'Chystáte se upravit vlastnosti následujícího modelu: |Chystáte se upravit vlastnosti následujících :model_count modelů:',
+
     ),
 
     'bulkdelete' => array(
         'error'   		    => 'Nebyly vybrány žádné modely, takže nebylo nic smazáno.',
-        'success' 		    => ':success_count modelů smazáno!',
+        'success' 		    => 'Model smazán!|:success_count modelů odstraněno!',
         'success_partial' 	=> ':success_count modelů smazáno, ale :fail_count nebylo možné smazat protože pořád mají přiřazený majetek.'
     ),
 

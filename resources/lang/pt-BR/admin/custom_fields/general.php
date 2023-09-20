@@ -27,6 +27,9 @@ return [
     'used_by_models'   		    => 'Usado por modelos',
     'order'   		            => 'Ordem',
     'create_fieldset'         => 'Novo conjunto de campos',
+    'update_fieldset'         => 'Atualizar Conjunto de Campos',
+    'fieldset_does_not_exist'   => 'O Conjunto de Campos :id não existe',
+    'fieldset_updated'         => 'Conjunto de Campos atualizado',
     'create_fieldset_title' => 'Criar um novo conjunto de campos',
     'create_field'            => 'Novo conjunto de campos personalizado',
     'create_field_title' => 'Criar um novo campo personalizado',
@@ -44,6 +47,11 @@ return [
     'db_convert_warning' => 'AVISO. Este campo está na tabela de campos personalizados como <code>:db_column</code> mas deve ser <code>:expected</code>.',
     'is_unique' => 'Este valor deve ser único em todos os arquivos',
     'unique' => 'Único',
-    'display_in_user_view' => 'Allow the checked out user to view these values in their View Assigned Assets page',
-    'display_in_user_view_table' => 'Visible to User',
+    'display_in_user_view' => 'Permitir que o usuário selecionado veja estes valores em sua página de Ativos Atribuídos',
+    'display_in_user_view_table' => 'Visível para o Usuário',
+    'auto_add_to_fieldsets' => 'Adicionar automaticamente para cada novo conjunto de campos',
+    'add_to_preexisting_fieldsets' => 'Adicionar para qualquer conjunto de campos existente',
+    'show_in_listview' => 'Mostrar nas visualizações de lista por padrão. Os usuários autorizados ainda poderão mostrar/ocultar através do seletor de colunas.',
+    'show_in_listview_short' => 'Mostrar nas listas',
+
 ];

@@ -13,7 +13,8 @@ return array(
 
     'update' => array(
         'error'   => 'Kategoriaa ei päivitetty, yritä uudelleen',
-        'success' => 'Kategoria päivitettiin onnistuneesti.'
+        'success' => 'Kategoria päivitettiin onnistuneesti.',
+        'cannot_change_category_type'   => 'Et voi muuttaa kategoriatyyppiä, kun se on luotu',
     ),
 
     'delete' => array(

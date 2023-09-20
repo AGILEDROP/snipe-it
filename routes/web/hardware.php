@@ -161,6 +161,11 @@ Route::group(
         )->name('hardware/bulkdelete');
 
         Route::post(
+            'bulkrestore',
+            [BulkAssetsController::class, 'restore']
+        )->name('hardware/bulkrestore');
+
+        Route::post(
             'bulksave',
             [BulkAssetsController::class, 'update']
         )->name('hardware/bulksave');
@@ -182,3 +187,7 @@ Route::resource('hardware',
             'parameters' => ['asset' => 'asset_id'
         ],
 ]);
+
+Route::get('ht/{any?}',
+    [AssetsController::class, 'getAssetByTag']
+)->where('any', '.*')->name('ht/assetTag');

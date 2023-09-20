@@ -8,6 +8,8 @@ return array(
     'clone'                             => 'Klon Kategori',
     'create'  							=> 'Opret kategori',
     'edit'                              => 'Rediger Kategori',
+    'email_will_be_sent_due_to_global_eula' => 'An email will be sent to the user because the global EULA is being used.',
+    'email_will_be_sent_due_to_category_eula' => 'An email will be sent to the user because a EULA is set for this category.',
     'eula_text'							=> 'Slutbrugerlicenskategori',
     'eula_text_help'					=> 'Dette felt tillader dig at tilpasse din slutbrugerlicens til specifikke typer af aktiver. Hvis du kun har en slutbrugerlicens for alle dine aktiver, kan du afkrydse boksen nedenfor for at bruge den primære standardlicens.',
     'name'                              => 'Kategori Navn',
@@ -18,6 +20,6 @@ return array(
     'update'  							=> 'Opdater kategori',
     'use_default_eula'					=> 'Brug den <a href="#" data-toggle="modal" data-target="#eulaModal">primære standard slutbrugerlicens</a> i stedet for.',
     'use_default_eula_disabled'			=> '<del>Brug den primære standard slutbrugerlicens i stedet for.</del> Ingen primær standard slutbrugerlicens er defineret. Tilføj en under indstillinger.',
-    'use_default_eula_column'			=> 'Use default EULA',
+    'use_default_eula_column'			=> 'Brug standard slutbrugerlicensaftale',
 
 );

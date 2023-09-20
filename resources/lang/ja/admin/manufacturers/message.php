@@ -2,6 +2,7 @@
 
 return array(
 
+    'support_url_help' => 'URL内の <code>{LOCALE}</code> と <code>{SERIAL}</code> を変数として使用して、アセットを表示するときに自動的に入力される値を変数として使用します。',
     'does_not_exist' => '製造元が存在しません。',
     'assoc_users'	 => 'この製造元は一つ以上の型番に関連付けられているため、削除できません。この製造元の関連付けを削除後、もう一度試して下さい。 ',
 

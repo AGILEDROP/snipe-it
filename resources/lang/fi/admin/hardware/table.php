@@ -8,6 +8,7 @@ return [
     'change' 		=> 'Toiminto',
     'checkout_date' => 'Luovutuspäivä',
     'checkoutto' 	=> 'Luovutettu',
+    'components_cost' => 'Komponenttien kustannukset yhteensä',
     'current_value' => 'Nykyinen arvo',
     'diff' 			=> 'Erotus',
     'dl_csv' 		=> 'Lataa CSV',

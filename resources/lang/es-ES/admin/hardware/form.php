@@ -2,8 +2,11 @@
 
 return [
     'bulk_delete'		=> 'Confirmar eliminación masiva de bienes',
+    'bulk_restore'      => 'Confirmar recuperación masiva de activos', 
   'bulk_delete_help'	=> 'Revisar los bienes para eliminación masiva. Una vez eliminados, esos bienes pueden ser restaurados, pero no volverán a estar asociados con ningún usuario a los que esté asignado.',
+  'bulk_restore_help'	=> 'Revisar los activos para la restauración en masa a continuación. Una vez restaurados, estos activos no estarán asociados con los usuarios a los que fueron asignados anteriormente.',
   'bulk_delete_warn'	=> 'Está a punto de borrar :asset_count.',
+  'bulk_restore_warn'	=> 'Está a punto de restaurar :asset_count activos.',
     'bulk_update'		=> 'Actualización masiva de Equipos',
     'bulk_update_help'	=> 'Este formulario le permite actualizar múltiples Equipos simultáneamente. Solo complete los campos que quiere modificar. Todo campo en blanco permanecerá sin cambios. ',
     'bulk_update_warn'	=> 'Está a punto de editar las propiedades de un solo activo.|Está a punto de editar las propiedades de :asset_count activos.',
@@ -45,7 +48,7 @@ return [
     'asset_location_update_default' => 'Actualizar sólo la ubicación predeterminada',
     'asset_not_deployable' => 'Ese estado de activos no es desplegable. Este activo no puede ser verificado.',
     'asset_deployable' => 'Ese estado de activos no es desplegable. Este activo no puede ser verificado.',
-    'processing_spinner' => 'Procesando...',
+    'processing_spinner' => 'Procesando... (Esto puede tomar un poco de tiempo en archivos grandes)',
     'optional_infos'  => 'Información opcional',
     'order_details'   => 'Información relacionada con el pedido'
 ];

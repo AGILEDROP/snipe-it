@@ -2,7 +2,7 @@
 
 return [
 
-    'select_language' => 'Select a language',
+    'select_language' => 'Избор на език',
     'languages' => [
         'en'=> 'English, US',
         'en-GB'=> 'English, UK',
@@ -256,6 +256,7 @@ return [
         'UK'=>'Scotland',
         'SB'=>'Solomon Islands',
         'SC'=>'Seychelles',
+        'SS'=>'South Sudan',
         'SD'=>'Sudan',
         'SE'=>'Sweden',
         'SG'=>'Singapore',

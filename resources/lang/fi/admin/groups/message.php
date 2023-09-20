@@ -3,7 +3,7 @@
 return array(
 
     'group_exists'        => 'Ryhmä on jo olemassa!',
-    'group_not_found'     => 'Ryhmää [:id] ei löydy.',
+    'group_not_found'     => 'Ryhmää :id ei ole olemassa.',
     'group_name_required' => 'Nimi on pakollinen',
 
     'success' => array(

@@ -2,6 +2,7 @@
 
 return array(
 
+    'support_url_help' => '在您的網址中使用 <code>{LOCALE}</code> 和 <code>{SERIAL}</code> 作為變數，當檢視資產時，這些值會自動填充。',
     'does_not_exist' => '製造商不存在',
     'assoc_users'	 => '至少還有一個資產與此製造商關聯，目前不能被删除，請確認後重試。 ',
 

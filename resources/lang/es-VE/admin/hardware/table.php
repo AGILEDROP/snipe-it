@@ -8,6 +8,7 @@ return [
     'change' 		=> 'Registrado / Asignado',
     'checkout_date' => 'Fecha de Asignación',
     'checkoutto' 	=> 'Asignado',
+    'components_cost' => 'Coste total de componentes',
     'current_value' => 'Valor actual',
     'diff' 			=> 'Diferencia',
     'dl_csv' 		=> 'Descargar CSV',

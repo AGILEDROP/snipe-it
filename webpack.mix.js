@@ -18,8 +18,6 @@ mix
       "./node_modules/@fortawesome/fontawesome-free/css/all.css",
       "./public/css/build/AdminLTE.css",
       "./node_modules/jquery-ui-bundle/jquery-ui.css",
-      "./node_modules/admin-lte/plugins/iCheck/minimal/blue.css",
-      "./node_modules/icheck/skins/minimal/minimal.css",
       "./node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.standalone.css",
       "./node_modules/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css",
       "./node_modules/blueimp-file-upload/css/jquery.fileupload.css",
@@ -28,19 +26,13 @@ mix
       "./node_modules/bootstrap-table/dist/bootstrap-table.css",
       "./public/css/build/app.css",
       "./node_modules/select2/dist/css/select2.css",
+      "./resources/assets/css/dragtable.css",
       "./public/css/build/overrides.css",
     ],
     "./public/css/dist/all.css"
   )
   .version();
 
-mix.copy(
-  [
-    "./node_modules/icheck/skins/minimal/blue.png",
-    "./node_modules/icheck/skins/minimal/blue@2x.png",
-  ],
-  "./public/css"
-);
 
 /**
  * Copy, minify and version signature-pad.css
@@ -152,6 +144,7 @@ mix
     [
       "./node_modules/bootstrap-table/dist/bootstrap-table.css",
       "./node_modules/bootstrap-table/dist/extensions/sticky-header/bootstrap-table-sticky-header.css",
+      "./node_modules/dragtable/dragtable.css",
     ],
     "public/css/dist/bootstrap-table.css"
   )
@@ -174,7 +167,6 @@ mix.combine(
     "./node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js",
     "./node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.js",
     "./node_modules/ekko-lightbox/dist/ekko-lightbox.js",
-    "./node_modules/icheck/icheck.js", //definite problem here :(
     "./resources/assets/js/extensions/pGenerator.jquery.js",
     "./node_modules/chart.js/dist/Chart.js",
     "./resources/assets/js/signature_pad.js",
@@ -190,10 +182,13 @@ mix.combine(
 mix
   .combine(
         [
+            "./resources/assets/js/dragtable.js",
             './node_modules/bootstrap-table/dist/bootstrap-table.js',
+            "./resources/assets/js/bootstrap-table-reorder-columns.js",
             './node_modules/bootstrap-table/dist/extensions/mobile/bootstrap-table-mobile.js',
             './node_modules/bootstrap-table/dist/extensions/export/bootstrap-table-export.js',
             './node_modules/bootstrap-table/dist/extensions/cookie/bootstrap-table-cookie.js',
+            './node_modules/bootstrap-table/dist/extensions/sticky-header/bootstrap-table-sticky-header.js',
             './resources/assets/js/extensions/jquery.base64.js',
             './node_modules/tableexport.jquery.plugin/tableExport.min.js',
             './node_modules/tableexport.jquery.plugin/libs/jsPDF/jspdf.umd.min.js',
@@ -209,6 +204,13 @@ mix
   .combine(
     ["./public/js/build/vendor.js", "./public/js/build/app.js"],
     "./public/js/dist/all.js"
+  )
+  .version();
+
+mix
+  .combine(
+    ['./node_modules/alpinejs/dist/cdn.js'],
+    './public/js/dist/all-defer.js'
   )
   .version();
 
